@@ -9,14 +9,14 @@ const nav = document.querySelector(".main__list");
 
 let isScroll = 0;
 
-window.onload = () => {
-    document.body.style.overflow = "hidden";
-    setTimeout(() => {
-        document.querySelector(".loading").style.display = "none";
-        document.querySelector(".wrapper").style.visibility = "visible";
-        document.body.style.overflow = "auto";
-    }, 1000)
-}
+// window.onload = () => {
+//     document.body.style.overflow = "hidden";
+//     setTimeout(() => {
+//         document.querySelector(".loading").style.display = "none";
+//         document.querySelector(".wrapper").style.visibility = "visible";
+//         document.body.style.overflow = "auto";
+//     }, 1000)
+// }
 
 window.onclick = (e) => {
     if(!e.target.closest(".nav__noitification")) { 
