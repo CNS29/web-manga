@@ -1,3 +1,5 @@
+import comic from "./manga.js"
+
 const btnMore = document.querySelector(".i-more");
 const btnChapter = document.querySelector(".i-chapter-more");
 const tab = document.querySelector(".i-comic__nav__comment__tab");
@@ -5,8 +7,66 @@ const textArea = document.querySelector(".text-area");
 const btnComment = document.querySelector(".submit-comment");
 const areaComment = document.querySelector(".i-comment-card");
 
+
+window.onload = () => {
+    const url = location.href.split('?')[1].split("=")[1];
+    let getId = comic.find((item) => {
+        return item.id === url;
+    })
+    document.querySelector(".i-img").setAttribute("src", getId.urlImg);
+    document.querySelector(".i-viewer").innerHTML = getId.view;
+    document.querySelectorAll(".i-name").forEach(item => {
+        item.innerText = getId.name;
+    });
+    
+    const showChapter = (data) => {
+        let result = "";
+        if(Number.isInteger(data)) {
+            for(let i = data; i > 0; i--) {
+                result += `
+                    <li>
+                        <p class="i-chapter">Chapter ${i}</p>
+                        <p class="i-update">5 phút trước</p>
+                        <p class="i-view">221.000</p>
+                    </li>`
+            }
+        }else {
+            for(let j = data; j >= 1; j -= 0.1) {
+                console.log();
+                result += `
+                <li>
+                    <p class="i-chapter">Chapter ${j.toFixed(1)}</p>
+                    <p class="i-update">5 phút trước</p>
+                    <p class="i-view">221.000</p>
+                </li>`
+            }
+        }
+        return result;
+    }
+
+    let htmls = `
+    <ul>
+        <li class="i-chapter__title">
+            <p>Số chương</p>
+            <p>Cập nhật</p>
+            <p>Lượt xem</p>
+        </li>
+        ${showChapter(+getId.chapter)}
+    </ul>
+    `
+    document.querySelector(".i-comic-chapter").innerHTML = htmls;
+    if(document.querySelector(".i-comic-chapter").scrollHeight > 660) {
+        btnChapter.onclick = () => {
+            document.querySelector(".i-comic-chapter").classList.remove("show-chapter");
+            btnChapter.style.display= "none";
+        }
+    }else {
+        document.querySelector(".i-comic-chapter").classList.remove("show-chapter");
+        btnChapter.style.display= "none";
+    }
+}
+
 tab.onclick = (e) => {
-    console.log();
     if(!e.target.closest(".tab__item").classList.contains("tab__item--active")) {
         tab.querySelector(".tab__item--active").classList.remove("tab__item--active");
         e.target.closest(".tab__item").classList.add("tab__item--active");
@@ -25,16 +85,6 @@ if(document.querySelector(".i-comic-content__desc").scrollHeight > 60) {
 }else {
     document.querySelector(".i-comic-content__desc").classList.remove("short-text");
     btnMore.style.display= "none";
-}
-
-if(document.querySelector(".i-comic-chapter").scrollHeight > 660) {
-    btnChapter.onclick = () => {
-        document.querySelector(".i-comic-chapter").classList.remove("show-chapter");
-        btnChapter.style.display= "none";
-    }
-}else {
-    document.querySelector(".i-comic-chapter").classList.remove("show-chapter");
-    btnChapter.style.display= "none";
 }
 
 btnComment.onclick = () => {

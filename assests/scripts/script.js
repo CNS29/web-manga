@@ -99,7 +99,7 @@ const render = () => {
     let htmls = comic.map(item => {
     return `
     <div class="col l-3 m-3 t-4 tm-6 c-12">
-        <a href="indexi.html">
+        <a href="indexi.html?name=${item.id}">
             <div class="comic__card">
                 <div class="card__image">
                     <img src="${item.urlImg}" alt="">
